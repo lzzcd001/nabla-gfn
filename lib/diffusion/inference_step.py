@@ -1,8 +1,3 @@
-# For licensing see accompanying LICENSE file.
-# Copyright (C) 2024 Apple Inc. All Rights Reserved.
-
-# Modified from https://github.com/huggingface/diffusers/blob/fc6acb6b97e93d58cb22b5fee52d884d77ce84d8/src/diffusers/schedulers/scheduling_ddim.py
-
 from typing import Optional, Tuple, Union
 
 import math

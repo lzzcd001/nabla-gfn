@@ -1,8 +1,3 @@
-# For licensing see accompanying LICENSE file.
-# Copyright (C) 2024 Apple Inc. All Rights Reserved.
-
-# Based on https://github.com/christophschuhmann/improved-aesthetic-predictor/blob/fe88a163f4661b4ddabba0751ff645e2e620746e/simple_inference.py
-
 import torch
 import torch.nn as nn
 import numpy as np
@@ -34,7 +29,6 @@ class MLP(nn.Module):
             nn.Linear(16, 1),
         )
 
-    # @torch.no_grad()
     def forward(self, embed):
         return self.layers(embed)
 
@@ -62,16 +56,6 @@ class AestheticScorer(torch.nn.Module):
         self.OPENAI_CLIP_MEAN = torch.tensor([0.48145466, 0.4578275, 0.40821073]).view(1, 3, 1, 1)
         self.OPENAI_CLIP_STD = torch.tensor([0.26862954, 0.26130258, 0.27577711]).view(1, 3, 1, 1)
 
-    # # @torch.no_grad()
-    # def __call__(self, images):
-    #     device = next(self.parameters()).device
-    #     inputs = self.processor(images=images, return_tensors="pt")
-    #     inputs = {k: v.to(self.dtype).to(device) for k, v in inputs.items()}
-    #     embed = self.clip.get_image_features(**inputs)
-    #     # normalize embedding
-    #     embed = embed / torch.linalg.vector_norm(embed, dim=-1, keepdim=True)
-    #     return self.mlp(embed).squeeze(1)
-    
 
     def __call__(self, images):
         device = next(self.parameters()).device

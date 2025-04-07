@@ -1,6 +1,3 @@
-# For licensing see accompanying LICENSE file.
-# Copyright (C) 2024 Apple Inc. All Rights Reserved.
-
 from importlib import resources
 import os
 import functools
@@ -81,7 +78,6 @@ import csv
 import collections
 @functools.lru_cache()
 def read_csv(path):
-    # reader = csv.DictReader(open(path))
     with open (path, 'r') as f:
         reader = csv.DictReader(f)
         reader = [row for row in reader]
@@ -116,11 +112,9 @@ def read_hpd(style=None):
         styles = ["anime", "concept-art", "paintings", "photo"]
     else:
         styles = [style,]
-    # dic = {}
     prompts_ls = []
     for style in styles:
         with open(ASSETS_PATH.joinpath(f"HPDv2/benchmark_{style}.json"), "r") as f:
-            # dic[style] = json.load(f)  # list of strings
             prompts_ls.extend(json.load(f)[10:]) # 790 for train, 10 for test
 
     return prompts_ls
