@@ -84,7 +84,7 @@ torchrun --standalone --nproc_per_node=2 train_nablagfn.py \
   --config.sampling.batch_size=4 \
   --config.sampling.num_batches_per_epoch=4 \
   --config.training.num_epochs=400 \
-  --exp_name=fast_fewer_gpus
+  --exp_name=fewer_gpus
 ```
 
 To save more GPU memory (at the cost of worse sample diversity and prior preservation), you may finetune the diffusion model with the forward loss only (see paper) and at the same time assuming that the guessed gradient is accurate (so no need for learning a U-Net for correction). To do this, run
@@ -103,7 +103,7 @@ torchrun --standalone --nproc_per_node=2 train_nablagfn.py \
   --config.sampling.num_batches_per_epoch=4 \
   --config.training.num_epochs=400 \
   --config.model.no_flow=True \
-  --exp_name=fast_fewer_gpus_no_flow_correction
+  --exp_name=fewer_gpus_no_flow_correction
 ```
 
 ### Parameters to tune
