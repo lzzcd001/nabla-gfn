@@ -42,7 +42,13 @@ Modify `config/default_config.py` and replace all `"PLACEHOLDER"` strings to the
 Suppose that you aim to finetune StableDiffusion on a 8-GPU A100 node. To run one of our settings in the paper:
 
 ```
-torchrun --standalone --nproc_per_node=8 train_nablagfn.py --config=config/aesthetic.py --seed=0 --config.model.reward_scale=1e4 --config.sampling.low_var_subsampling=True --config.model.unet_reg_scale=2e3 --exp_name=default
+torchrun --standalone --nproc_per_node=8 train_nablagfn.py \
+  --config=config/aesthetic.py \
+  --seed=0 \
+  --config.model.reward_scale=1e4 \
+  --config.sampling.low_var_subsampling=True \
+  --config.model.unet_reg_scale=2e3 \
+  --exp_name=default
 ```
 
 Modify the config file to `config/hpsv2.py` or `config/imagereward.py` if you are to finetune on HPSv2 or ImageReward reward model, respectively.
@@ -50,20 +56,54 @@ Modify the config file to `config/hpsv2.py` or `config/imagereward.py` if you ar
 For faster convergence (in terms of wall clock time) and less memory consumption (potentially runnable on RTX 4090 / L40), try the following (potentially with slight degradation in prior preservation)
 
 ```
-torchrun --standalone --nproc_per_node=8 train_nablagfn.py --config=config/aesthetic.py --seed=0 --config.model.reward_scale=1e4 --config.model.unet_reg_scale=2e3 --config.sampling.low_var_subsampling=True --config.model.timestep_fraction=0.1 --config.training.gradient_accumulation_steps=1 --config.sampling.batch_size=4 --config.sampling.num_batches_per_epoch=1 --config.training.num_epochs=400 --exp_name=fast
+torchrun --standalone --nproc_per_node=8 train_nablagfn.py \
+  --config=config/aesthetic.py \
+  --seed=0 \
+  --config.model.reward_scale=1e4 \
+  --config.model.unet_reg_scale=2e3 \
+  --config.sampling.low_var_subsampling=True \
+  --config.model.timestep_fraction=0.1 \
+  --config.training.gradient_accumulation_steps=1 \
+  --config.sampling.batch_size=4 \
+  --config.sampling.num_batches_per_epoch=1 \
+  --config.training.num_epochs=400 \
+  --exp_name=fast
 ```
 
 To try the above setting with fewer GPUs (e.g., 2 GPUs), you may try:
 
 ```
-torchrun --standalone --nproc_per_node=2 train_nablagfn.py --config=config/aesthetic.py --seed=0 --config.model.reward_scale=1e4 --config.model.unet_reg_scale=2e3 --config.sampling.low_var_subsampling=True --config.model.timestep_fraction=0.1 --config.training.gradient_accumulation_steps=4 --config.sampling.batch_size=4 --config.sampling.num_batches_per_epoch=4 --config.training.num_epochs=400 --exp_name=fast_fewer_gpus
+torchrun --standalone --nproc_per_node=2 train_nablagfn.py \
+  --config=config/aesthetic.py \
+  --seed=0 \
+  --config.model.reward_scale=1e4 \
+  --config.model.unet_reg_scale=2e3 \
+  --config.sampling.low_var_subsampling=True \
+  --config.model.timestep_fraction=0.1 \
+  --config.training.gradient_accumulation_steps=4 \
+  --config.sampling.batch_size=4 \
+  --config.sampling.num_batches_per_epoch=4 \
+  --config.training.num_epochs=400 \
+  --exp_name=fast_fewer_gpus
 ```
 
 To save more GPU memory (at the cost of worse sample diversity and prior preservation), you may finetune the diffusion model with the forward loss only (see paper) and at the same time assuming that the guessed gradient is accurate (so no need for learning a U-Net for correction). To do this, run
 
 
 ```
-torchrun --standalone --nproc_per_node=2 train_nablagfn.py --config=config/aesthetic.py --seed=0 --config.model.reward_scale=1e4 --config.model.unet_reg_scale=2e3 --config.sampling.low_var_subsampling=True --config.model.timestep_fraction=0.1 --config.training.gradient_accumulation_steps=4 --config.sampling.batch_size=4 --config.sampling.num_batches_per_epoch=4 --config.training.num_epochs=400 --config.model.no_flow=True --exp_name=fast_fewer_gpus_no_flow_correction
+torchrun --standalone --nproc_per_node=2 train_nablagfn.py \
+  --config=config/aesthetic.py \
+  --seed=0 \
+  --config.model.reward_scale=1e4 \
+  --config.model.unet_reg_scale=2e3 \
+  --config.sampling.low_var_subsampling=True \
+  --config.model.timestep_fraction=0.1 \
+  --config.training.gradient_accumulation_steps=4 \
+  --config.sampling.batch_size=4 \
+  --config.sampling.num_batches_per_epoch=4 \
+  --config.training.num_epochs=400 \
+  --config.model.no_flow=True \
+  --exp_name=fast_fewer_gpus_no_flow_correction
 ```
 
 ### Parameters to tune
