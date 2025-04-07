@@ -53,7 +53,7 @@ torchrun --standalone --nproc_per_node=8 train_nablagfn.py \
 
 Modify the config file to `config/hpsv2.py` or `config/imagereward.py` if you are to finetune on HPSv2 or ImageReward reward model, respectively.
 
-For faster convergence (in terms of wall clock time) and less memory consumption (potentially runnable on RTX 4090 / L40), try the following (possibly with slight degradation in prior preservation)
+For faster convergence (in terms of wall clock time) and less memory consumption (potentially runnable on RTX 4090 / V100 / L40; for much less memory consumption, see the last setting), try the following (possibly with slight degradation in prior preservation)
 
 ```
 torchrun --standalone --nproc_per_node=8 train_nablagfn.py \
