@@ -25,11 +25,8 @@ def get_default_configs():
     model = config.model = config_dict.ConfigDict()
     model.lora_rank = 8
     model.reward_scale = 1e3
-    model.no_accumulation = False
     model.timestep_fraction = 0.1
     ### GFN Specific
-    model.loss_stop_2nd_gd = True
-    model.flow_copy_init = False
     model.flow_layers_per_block = 1
     model.flow_channel_width = (64, 128, 256, 256)
     model.unet_reg_scale = 1e3

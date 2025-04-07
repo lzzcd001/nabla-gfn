@@ -113,7 +113,16 @@ def setup(local_rank, is_local_main_process):
     scheduler_config = {}
 
     scheduler_config.update(pipeline.scheduler.config)
-    pipeline.scheduler = DDIMScheduler.from_config(scheduler_config)
+    if config.sampling.scheduler == 'DPM-solver':
+        if is_local_main_process:
+            logger.info("Using SDE DPM-solver (1st order)")
+        pipeline.scheduler = DPMSolverSinglestepScheduler.from_config(scheduler_config)
+        pipeline.scheduler.config.algorithm_type = "sde-dpmsolver++"  # Switch to SDE mode
+        ### Essential; otherwise the score function at the final step is of infinite magnitude
+        pipeline.scheduler.config.final_sigmas_type = 'sigma_min'
+        pipeline.scheduler.set_timesteps(num_inference_steps, device=device)
+    else:
+        pipeline.scheduler = DDIMScheduler.from_config(scheduler_config)
     pipeline.vae.requires_grad_(False)
     pipeline.text_encoder.requires_grad_(False)
     pipeline.vae.to(device, dtype=weight_dtype)
