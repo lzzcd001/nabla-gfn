@@ -1,6 +1,10 @@
 # Nabla-GFlowNet: Efficient Diversity-Preserving Diffusion Alignment via Gradient-Informed GFlowNets
 
 
+<div align="center">
+  <img src="assets/teaser" width="900"/>
+</div>
+
 ## Introduction
 
 This is the official implementation of [Nabla-GFlowNet](https://arxiv.org/abs/2412.07775) (ICLR 2025).
