@@ -130,7 +130,7 @@ We found that using float32 for reward model computation (plus its gradients) is
 If you find our work useful to your research, please consider citing:
 
 ```
-@InProceedings{liu2025nablagfn,
+@inproceedings{liu2025nablagfn,
   title={Efficient Diversity-Preserving Diffusion Alignment via Gradient-Informed GFlowNets},
   author={Liu, Zhen and Xiao, Tim Z and and Liu, Weiyang and Bengio, Yoshua and Zhang, Dinghuai},
   booktitle={ICLR},
