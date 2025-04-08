@@ -21,6 +21,8 @@ Nabla-GFlowNet is an efficient reward finetuning method for diffusion model that
 - PyTorch
 - TorchVision
 
+Then follow [https://github.com/facebookresearch/xformers](https://github.com/facebookresearch/xformers) to install xformers.
+
 With the above installed, run
 
 ```
