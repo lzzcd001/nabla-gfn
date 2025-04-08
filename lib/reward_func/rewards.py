@@ -90,7 +90,6 @@ def hpscore(dtype=torch.float32, device=torch.device('cuda')):
 
     hps_version = "v2.1"
     model_dict = {}
-    # def initialize_model():
     if not model_dict:
         model, preprocess_train, preprocess_val = create_model_and_transforms(
             'ViT-H-14',
@@ -111,12 +110,8 @@ def hpscore(dtype=torch.float32, device=torch.device('cuda')):
             with_score_predictor=False,
             with_region_predictor=False
         )
-        # model_dict['model'] = model
-        # model_dict['preprocess_val'] = preprocess_val
 
     # initialize_model()
-    # model = model_dict['model']
-    # preprocess_val = model_dict['preprocess_val']
     if not os.path.exists(root_path):
         os.makedirs(root_path)
     cp = huggingface_hub.hf_hub_download("xswu/HPSv2", hps_version_map[hps_version])
@@ -127,24 +122,6 @@ def hpscore(dtype=torch.float32, device=torch.device('cuda')):
     model.eval()
 
     def _fn(images, prompts, metadata):
-        # result = []
-        # for img, prompt in zip(images, prompts):
-        #     # Load your image and prompt
-        #     # Process the image
-        #     img = F.to_pil_image(img)
-        #     assert isinstance(img, Image.Image)
-        #     image = preprocess_val(img).unsqueeze(0).to(device=device, non_blocking=True)
-        #     text = tokenizer([prompt]).to(device=device, non_blocking=True)
-        #
-        #     with torch.cuda.amp.autocast():
-        #         outputs = model(image, text)
-        #         image_features, text_features = outputs["image_features"], outputs["text_features"]
-        #         logits_per_image = image_features @ text_features.T
-        #         hps_score = torch.diagonal(logits_per_image).cpu().numpy()
-        #     result.append(hps_score[0])
-        # return torch.tensor(result, device=device), {}
-
-
         image_size = model.visual.image_size[0]
         transforms = Compose([
             ResizeMaxSize(image_size, fill=0), # resize to 224x224
