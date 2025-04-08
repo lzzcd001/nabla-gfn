@@ -17,15 +17,15 @@ Nabla-GFlowNet is an efficient reward finetuning method for diffusion model that
 ### Requirements
 
 - Python >= 3.8
-- CUDA 12.1
-- Pytorch
-- diffusers
-- peft
-- wandb
-- ml_collections
-- openai-clip
-- image-reward
-- Some other minor libraries
+- CUDA 12.4
+- PyTorch
+- TorchVision
+
+With the above installed, run
+
+```
+pip install -r requirements.txt
+```
 
 ### Pretrained Models
 
