@@ -1,0 +1,15 @@
+diffusers["torch"]
+transformers
+peft
+openai-clip
+image-reward
+
+inflect
+importlib_resources
+setuptools==70.3.0
+absl-py
+ml_collections
+
+tqdm
+wandb
+termcolor
