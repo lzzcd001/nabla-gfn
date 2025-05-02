@@ -321,7 +321,9 @@ def train():
 
     num_inference_steps = config.sampling.num_steps
     scheduler_dt = pipeline.scheduler.timesteps[0] - pipeline.scheduler.timesteps[1]
-    num_train_timesteps = int(num_inference_steps * config.model.timestep_fraction) + 1
+    num_train_timesteps = int(num_inference_steps * config.model.timestep_fraction)
+    if num_train_timesteps != num_inference_steps:
+        num_train_timesteps += 1
     accumulation_steps = config.training.gradient_accumulation_steps * num_train_timesteps
 
     for epoch in range(first_epoch, config.training.num_epochs):
