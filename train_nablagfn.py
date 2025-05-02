@@ -880,7 +880,7 @@ def train():
                             flow_update_grad = torch.nn.utils.clip_grad_norm_(res_logflowscore_model.parameters(), config.training.max_grad_norm)
 
                         scaler.step(optimizer)
-                        optimizer.step()
+                        # optimizer.step()
                         scaler.update()
                     else:
                         pf_update_grad = torch.nn.utils.clip_grad_norm_([p for name, p in unet.named_parameters() if '.pf.' in name], config.training.max_grad_norm)
