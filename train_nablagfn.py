@@ -386,7 +386,7 @@ def train():
                 timesteps = pipeline.scheduler.timesteps.repeat(
                     config.sampling.batch_size, 1
                 )  # (bs, num_steps)  (981, 961, ..., 21, 1) corresponds to "next_latents"
-                step_index = torch.ones(timesteps.size(1), device=timesteps.device, dtype=torch.int64).view(1, -1).expand(timesteps.size(0), -1)
+                step_index = torch.arange(timesteps.size(1), device=timesteps.device, dtype=torch.int64).view(1, -1).expand(timesteps.size(0), -1)
 
                 rewards = reward_fn(images.float(), prompts, prompt_metadata) # (reward, reward_metadata)
                 samples.append(
